@@ -9,7 +9,7 @@ import (
 )
 
 // Calculates a MAC (message authentication code) for requests to be sent to Futubank processing center (futubank.com)
-func CalculateSignature(data map[string]string, secret_key string) string {
+func CalculateSignature(data map[string]string, secretKey string) string {
 	// Create a sorted list of keys
 	keys := make([]string, len(data))
 	i := 0
@@ -29,16 +29,16 @@ func CalculateSignature(data map[string]string, secret_key string) string {
 		chunk := fmt.Sprintf("%s=%s", key, base64.StdEncoding.EncodeToString([]byte(data[key])))
 		chunks = append(chunks, chunk)
 	}
-	var prepared_string = strings.Join(chunks, "&")
+	var preparedString = strings.Join(chunks, "&")
 
 	// Calculate the MAC
 	var result string
-	result = sha1_hex(secret_key + prepared_string)
-	result = sha1_hex(secret_key + result)
+	result = sha1Hex(secretKey + preparedString)
+	result = sha1Hex(secretKey + result)
 	return result
 }
 
-func sha1_hex(data string) string {
-	var sha1_bytes = sha1.Sum([]byte(data))
-	return fmt.Sprintf("%x", sha1_bytes)
+func sha1Hex(data string) string {
+	var sha1Bytes = sha1.Sum([]byte(data))
+	return fmt.Sprintf("%x", sha1Bytes)
 }

@@ -10,9 +10,9 @@ func TestSignature(t *testing.T) {
 	}
 
 	mac := CalculateSignature(data, "secret")
-	expected_mac := "07e5ae4250cff195c0afbf6740df59f40074815d"
+	expectedMac := "07e5ae4250cff195c0afbf6740df59f40074815d"
 
-	if mac != expected_mac {
-		t.Errorf("Expected: %s, got: %s", expected_mac, mac)
+	if mac != expectedMac {
+		t.Errorf("Expected: %s, got: %s", expectedMac, mac)
 	}
 }

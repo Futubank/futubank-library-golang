@@ -10,25 +10,20 @@ import (
 
 // Calculates a MAC (message authentication code) for requests to be sent to Futubank processing center (futubank.com)
 func CalculateSignature(data map[string]string, secretKey string) string {
-	// Create a sorted list of keys
-	keys := make([]string, len(data))
-	i := 0
-	for k, _ := range data {
-		keys[i] = k
-		i++
-	}
-	sort.Strings(keys)
-
 	// Build a string of key/value pairs
 	var chunks []string
-	for _, key := range keys {
-		if data[key] == "" {
+	for key, value := range data {
+		if value == "" {
 			continue
 		}
 
 		chunk := fmt.Sprintf("%s=%s", key, base64.StdEncoding.EncodeToString([]byte(data[key])))
 		chunks = append(chunks, chunk)
 	}
+
+	// Sort chunks (by key name actually)
+	sort.Strings(chunks)
+
 	var preparedString = strings.Join(chunks, "&")
 
 	// Calculate the MAC

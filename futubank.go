@@ -1,3 +1,4 @@
+// Contains a function that generates digital signature used in requests to futubank.com
 package futubank
 
 import (
